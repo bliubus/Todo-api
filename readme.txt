@@ -9,3 +9,5 @@ git add .
 git commit -am "Init repo"
 git push heroku master
 heroku open
+
+npm install body-parser@1.13.3 --save
