@@ -8,3 +8,4 @@ git status
 git add .
 git commit -am "Init repo"
 git push heroku master
+heroku open
