@@ -12,3 +12,6 @@ heroku open
 
 npm install body-parser@1.13.3 --save
 npm install underscore@1.8.3 --save
+
+npm install sequelize@3.5.1 --save
+npm install sqlite3@3.0.10 --save
