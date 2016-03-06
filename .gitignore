@@ -2,3 +2,4 @@ node_modules/
 readme.txt
 readme.txt.swp
 data/*.sqlite
+data
