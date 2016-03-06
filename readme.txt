@@ -55,4 +55,5 @@ heroku pg:reset postgresql-spherical-45498 --confirm bin-todo-api
 heroku ps:stop postgresql-spherical-45498 --confirm bin-todo-api
 heroku addons:destroy postgresql-spherical-45498 --confirm bin-todo-api
 heroku addons:destroy postgresql-curly-70900 --confirm bin-todo-api
+heroku addons:destroy postgresql-flexible-63729 --confirm bin-todo-api
 ========================================================
