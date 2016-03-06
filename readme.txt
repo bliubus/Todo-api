@@ -59,3 +59,7 @@ heroku addons:destroy postgresql-flexible-63729 --confirm bin-todo-api
 ========================================================
 
 npm install bcrypt@0.8.5 --save
+
+// token generator
+npm install jsonwebtoken@5.0.5 --save
+npm install crypto-js@3.1.5 --save
