@@ -139,33 +139,55 @@ app.delete('/todos/:id', function(req, res) {
 
 app.put('/todos/:id', function(req, res) {
 	var todoId = parseInt(req.params.id);
-	var matchedTodo = _.findWhere(todos, {id: todoId});
+
+
+//	var matchedTodo = _.findWhere(todos, {id: todoId});
 	var body = _.pick(req.body, 'description', 'completed');
-	var validAttributes = {};
+	var attributes = {};
 
-	if (!matchedTodo) {
-		return res.status(404).send();
+	if (body.hasOwnProperty('completed')) {
+		attributes.completed = body.completed;
 	}
 
-	if (body.hasOwnProperty('completed') && _.isBoolean(body.completed)) {
-		validAttributes.completed = body.completed;
-	} else if (body.hasOwnProperty('completed')) {
-		return res.status(400).send();
-	} else {
-		// Never provided attribute, no problem here
+	if (body.hasOwnProperty('description')) {
+		attributes.description = body.description;
 	}
 
-	if (body.hasOwnProperty('description') && _.isString(body.description) && body.description.trim().length > 0) {
-		validAttributes.description = body.description;
-	} else if (body.hasOwnProperty('description')) {
-		return res.status(400).send();
-	} else {
-		// Never provided attribute, no problem here
-	}
+	db.todo.findById(todoId).then(function(todo) {
+		if (todo) {
+			todo.update(attributes).then(function(todo) {
+				res.json(todo);
+			}, function(e) {
+				res.status(400).json(e);
+			})
+		} else {
+			res.status(404).send();
+		}
+	}, function(e) {
+		res.satus(500).send();
+	});
+	// if (!matchedTodo) {
+	// 	return res.status(404).send();
+	// }
 
-	matchedTodo = _.extend(matchedTodo, validAttributes);
+	// if (body.hasOwnProperty('completed') && _.isBoolean(body.completed)) {
+	// 	validAttributes.completed = body.completed;
+	// } else if (body.hasOwnProperty('completed')) {
+	// 	return res.status(400).send();
+	// } else {
+	// 	// Never provided attribute, no problem here
+	// }
 
-	res.json(matchedTodo);
+	// if (body.hasOwnProperty('description') && _.isString(body.description) && body.description.trim().length > 0) {
+	// 	validAttributes.description = body.description;
+	// } else if (body.hasOwnProperty('description')) {
+	// 	return res.status(400).send();
+	// } else {
+	// 	// Never provided attribute, no problem here
+	// }
+
+	// matchedTodo = _.extend(matchedTodo, validAttributes);
+	// res.json(matchedTodo);
 });
 
 db.sequelize.sync().then(function() {
